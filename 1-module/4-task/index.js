@@ -1,3 +1,4 @@
 function checkSpam(str) {
-  // ваш код...
+ let unFillTrigger = str.toLowerCase();
+ return unFillTrigger.includes('1xbet') || unFillTrigger.includes('xxx');
 }
