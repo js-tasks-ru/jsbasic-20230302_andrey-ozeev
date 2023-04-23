@@ -23,32 +23,18 @@ export default class ProductGrid {
   updateFilter(filters) {
     Object.assign(this.filters, filters);
 
-    let showProducts = (array) => {
-      this.elem.querySelector('.products-grid__inner').replaceChildren();
-      for (let product of array) {
-        let item = new ProductCard(product);
-
-        this.elem.querySelector('.products-grid__inner').append(item.elem);
-      }
-    };
-    let array = [];
-
     let final = () => {
+      let array = [];
+
       this.products.filter((product) => {
-        if (this.filters.noNuts) {
-          if (product.nuts) {
-            return product;
-          }
+        if (this.filters.noNuts && product.nuts) {
+          return product;
         }
-        if (this.filters.vegeterianOnly) {
-          if (!product.vegeterian) {
-            return product;
-          }
+        if (this.filters.vegeterianOnly && !product.vegeterian) {
+          return product;
         }
-        if (this.filters.maxSpiciness || this.filters.maxSpiciness === 0) {
-          if (this.filters.maxSpiciness < product.spiciness) {
-            return product;
-          }
+        if ((this.filters.maxSpiciness || this.filters.maxSpiciness === 0) && (this.filters.maxSpiciness < product.spiciness)) {
+          return product;
         }
         if (this.filters.category) {
           if (product.category !== this.filters.category) {
@@ -63,7 +49,41 @@ export default class ProductGrid {
     };
     let result = final();
 
-    showProducts(result);
+    this.#showProducts(result);
     Object.assign(this.filters, '');
+  }
+
+  #showProducts(array) {
+    this.elem.querySelector('.products-grid__inner').replaceChildren();
+    for (let product of array) {
+      let item = new ProductCard(product);
+
+      this.elem.querySelector('.products-grid__inner').append(item.elem);
+    }
+  }
+
+  #final() {
+    let array = [];
+
+    this.products.filter((product) => {
+      if (this.filters.noNuts && product.nuts) {
+        return product;
+      }
+      if (this.filters.vegeterianOnly && !product.vegeterian) {
+        return product;
+      }
+      if ((this.filters.maxSpiciness || this.filters.maxSpiciness === 0) && (this.filters.maxSpiciness < product.spiciness)) {
+        return product;
+      }
+      if (this.filters.category) {
+        if (product.category !== this.filters.category) {
+          return product;
+        }
+      }
+
+      array.push(product);
+    });
+
+    return array;
   }
 }

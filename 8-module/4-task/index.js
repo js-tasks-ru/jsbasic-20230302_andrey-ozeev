@@ -209,7 +209,7 @@ export default class Cart {
         `);
 
         this.modal.setTitle('Success!');
-        this.cartItems.length = 0;
+        this.cartItems = [];
         this.cartIcon.update(this);
         this.modal.setBody(successBody);
         return;

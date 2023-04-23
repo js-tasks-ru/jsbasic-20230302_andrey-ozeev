@@ -45,11 +45,7 @@ export default class Cart {
   }
 
   isEmpty() {
-    if (this.cartItems.length > 0) {
-      return false;
-    } else {
-      return true;
-    }
+    return this.cartItems.length <= 0;
   }
 
   getTotalCount() {
